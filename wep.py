@@ -10,6 +10,31 @@ from reportlab.lib.enums import TA_LEFT, TA_RIGHT, TA_CENTER
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
 
+
+
+
+import streamlit as st
+
+# -------- SECURITY --------
+def check_password():
+    st.title("🔐 Login Required")
+
+    username = st.text_input("Username")
+    password = st.text_input("Password", type="password")
+
+    if st.button("Login"):
+        if username == "admin" and password == "matrix@123":
+            st.session_state["authenticated"] = True
+        else:
+            st.error("Invalid username or password")
+
+    return st.session_state.get("authenticated", False)
+
+
+if not check_password():
+    st.stop()
+# --------------------------
+
 # =========================
 # Helpers (UNCHANGED)
 # =========================
