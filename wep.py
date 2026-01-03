@@ -98,6 +98,7 @@ def generate_pdf_from_excel(uploaded_file):
 
     df = pd.read_excel(uploaded_file, sheet_name=0)
     df.columns = df.columns.str.strip()
+    file_name = uploaded_file.name
 
     party_col = find_column(df, ["party's name", "party name", "customer name", "customer"])
     pending_col = find_column(df, ["pending amount", "pending_amount", "pending amt", "amount", "amount pending"])
@@ -172,7 +173,7 @@ def generate_pdf_from_excel(uploaded_file):
     elements.append(Paragraph("MATRIX ELECTRICALS, COIMBATORE 641 012", styles['Title']))
     elements.append(Spacer(1, 8))
     elements.append(Paragraph(
-        f"OUTSTANDING ABOVE 90 DAYS & OVERDUE UPTO {datetime.now().strftime('%d.%m.%Y')}",
+        f"{file_name.split('.')[0].upper()}OUTSTANDING ABOVE 90 DAYS & OVERDUE UPTO {datetime.now().strftime('%d.%m.%Y')}",
         styles['Heading2']
     ))
     elements.append(Spacer(1, 14))
@@ -257,4 +258,5 @@ if uploaded_file is not None:
 
     except Exception as e:
         st.error(f"Error: {e}")
+
 
